@@ -34,6 +34,7 @@ CREATE TABLE stock(
     marca VARCHAR (30) NOT NULL DEFAULT "", 
     valor_unitario VARCHAR(15) NOT NULL DEFAULT "",
     cantidad INT NOT NULL DEFAULT "0",
+    imagen VARCHAR(20) NOT NULL UNIQUE,
     FOREIGN KEY(codigo_modelo) REFERENCES especificacion(modelo)
 );
 
