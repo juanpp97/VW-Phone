@@ -115,7 +115,7 @@ INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, mar
 INSERT INTO stockimagen_modelo, (nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("Poco-X4Pro.jpg", "Xiaomi Poco X4 Pro","Smartphone","Poco-X4Pro","Xiaomi","289.499,00",11);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("Note-11.jpg", "Xiaomi Redmi Note 11","Smartphone","Note-11","Xiaomi","108.999,00",17);
 
-INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("A31.jpg", "ZTE Blade A31","Smartphone","A-31","ZTE","29.999,00",7);
+INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("A-31.jpg", "ZTE Blade A31","Smartphone","A-31","ZTE","29.999,00",7);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("A-52.jpg", "ZTE Blade A52","Smartphone","A-52","ZTE","39.999,00",6);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("A-71.jpg", "ZTE Blade A71","Smartphone","A-71","ZTE","44.999,00",12);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("A-53.jpg", "ZTE Blade A53","Smartphone","A-53","ZTE","42.999,00",13);
