@@ -120,6 +120,3 @@ INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, mar
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("A-71.jpg", "ZTE Blade A71","Smartphone","A-71","ZTE","44.999,00",12);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("A-53.jpg", "ZTE Blade A53","Smartphone","A-53","ZTE","42.999,00",13);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("V-30.jpg", "ZTE Blade V30","Smartphone","V-30","ZTE","58.799,00",13);
-
-SELECT COUNT(*) FROM stock;
-SELECT COUNT(*) FROM especificacion;
