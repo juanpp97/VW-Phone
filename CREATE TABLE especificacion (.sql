@@ -1,5 +1,5 @@
 CREATE TABLE especificacion (
-    modelo VARCHAR(20) PRIMARY KEY UNIQUE NOT NULL,
+    codigo_modelo VARCHAR(20) PRIMARY KEY UNIQUE NOT NULL,
     camara_principal VARCHAR(20) NOT NULL DEFAULT "",
     camara_frontal VARCHAR(20) NOT NULL DEFAULT "",
     flash VARCHAR(2) NOT NULL DEFAULT "",
