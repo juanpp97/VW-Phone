@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+    <title>Catálogo</title>
+</head>
+<body>
+
+<header>
+    <nav>
+
+    </nav>
+</header>
+
+<main class="container">
+    <section class="container-grid">
+        <article class="item">
+            <div class="sub-item imagen">
+                <img src="../static/img/Samsung S23.webp" alt="Samsung S23" title="Conocer más" class="celular">
+            </div>
+            <div class="sub-item modelo">
+                <h3>Samsung Galaxy S23</h3>
+            </div>
+            <div class="sub-item precio">
+                <h3>$120.000</h3>
+            </div>
+            <div class="sub-item stock hidden" v-if="">
+                Sin Stock
+            </div>
+            <div class="sub-item form">
+                <form action="" method="POST">
+                    <button class="form__reducir">-</button>
+                    <input type="text" value="0" class="form__cantidad" readonly>
+                    <button class="form__aumentar">+</button>
+
+                </form>
+            </div>
+        </article>
+        <article class="item">
+            <div class="sub-item">
+                <img src="../static/img/Samsung S23 Plus.jpg" alt="Samsung S23" title="Conocer más" class="celular">
+            </div>
+            <div class="sub-item modelo">
+                <h3>Samsung Galaxy S23</h3>
+            </div>
+            <div class="sub-item precio">
+                <h3>$120.000</h3>
+            </div>
+            <div class="sub-item stock" v-if="">
+                Sin Stock
+            </div>
+            <div class="sub-item cantidad hidden">
+                <form action="" method="POST">
+                    <button id="reducir">-</button>
+                    <input type="text" value="0" id="cantidad" readonly>
+                    <button id="aumentar">+</button>
+
+                </form>
+            </div>
+        </article>
+       
+       
+    </section>
+
+
+</main>
+<footer>
+</footer>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
