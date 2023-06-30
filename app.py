@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
-import database
+from database import conectar, cerrar
+from celular import Celular
 import os
 
 app = Flask(__name__)
@@ -10,25 +11,24 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/api")
-def get_datos():
-    cursor = database.db.cursor()
-    sql = "SELECT * FROM stock INNER JOIN especificacion ON stock.codigo_modelo = especificacion.modelo"
-    cursor.execute(sql)
-    #Devuelve una lista de tuplas
-    resultado = cursor.fetchall()
-    datos = []
-    for stock in resultado:
-        dato = {'id': stock[0], 
-                'imagen': stock[1], 
-                'modelo': stock[2],
-                'tipo': stock[3],
-                'codigo': stock[4],
-                'marca': stock[5],
-                'precio': stock[6],
-                'cantidad': stock[7]}
-        datos.append(dato)
-    return jsonify(datos)
+@app.route("/stock", methods=["GET", "POST"])
+def obtener_datos():
+    if request.method == "GET":
+        cnx = conectar()
+        cursor = cnx.cursor()
+        sql = "SELECT * FROM stock INNER JOIN especificacion ON stock.codigo_modelo = especificacion.codigo_modelo"
+        cursor.execute(sql)
+        #Devuelve una lista de tuplas
+        celulares = cursor.fetchall()
+        columnas = tuple(nombre[0] for nombre in cursor.description)
+        datos=[]
+        for celular in celulares:       
+            datos.append(Celular(columnas, celular).diccionario())          
+        #En caso de error se controla desde JS
+        cursor.close()
+        cnx.close()
+        return jsonify(datos)
+
 
 @app.route("/api/<id>", methods = ['GET'])
 def get_id(id):

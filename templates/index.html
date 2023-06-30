@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,19 +10,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
     <title>Catálogo</title>
 </head>
+
 <body>
 
-<header>
-    <nav>
+    <header>
+        <nav class="container">
+            <picture class="logo">
+                <img src="{{url_for('static', filename='img/logo.webp')}}" alt="VW Phone">
+            </picture>
+            <div class="menu">
+                <ul class="menu__links">
+                    <li><a href="index.html" class="inicio">Inicio</a></li>
+                    <li><a href="emergencias.html" class="emergencias">Catálogo</a></li>
+                    <li><a href="hospitales.html" class="hospitales">¿Quienes Somos?</a></li>
+                    <li><a href="conocenos.html" class="conocenos">Administración</a></li>
+                </ul>
 
-    </nav>
-</header>
+            </div>
+            <div class="menu">
+                <ul class="menu__links iconos">
+                    <li><a href="hospitales.html" class="hospitales"><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a></li>
+                    <li><a href="conocenos.html" class="conocenos"><img src="{{url_for('static', filename='img/carrito.svg')}}" alt=""></a></li>
+                </ul>
+            </div>
 
-<main class="container">
-    <section class="container-grid">
-        <article class="item">
+        </nav>
+    </header>
+
+    <main class="container" id="app">
+        <section class="titulo">
+            <h2>Productos</h2>
+            <h3>Presione en la imagen del producto para obtener mas información </h3>
+        </section>
+        <section class="error" v-if="error">
+            [[mensaje]]
+        </section>
+        <section class="container-grid" v-else>
+            <article class="item" v-for="producto in productos">
+                <div class="sub-item imagen">
+                    <img :src="{{url_for('static', filename='')}} + 'img/' + producto.imagen_modelo"
+                        :alt="producto.marca + ' ' + producto.nombre_modelo" title="Conocer más" class="celular">
+                </div>
+                <div class="sub-item modelo">
+                    <h3>[[producto.marca === "Apple"
+                        ? producto.nombre_modelo
+                        : producto.marca + " " + producto.nombre_modelo]]</h3>
+
+                </div>
+                <div class="sub-item precio">
+                    <h3>[[producto.valor_unitario]]</h3>
+                </div>
+                <div class="sub-item stock" v-if="producto.cantidad == 0">
+                    Sin Stock
+                </div>
+                <div class="sub-item form" v-else>
+                    <form action="" method="POST" class="adsd">
+                        <button class="form__reducir" @click.prevent="reducir($event)">-</button>
+                        <input type="text" value="0" class="form__cantidad" readonly>
+                        <button class="form__aumentar" @click.prevent="aumentar($event,producto.cantidad)">+</button>
+                    </form>
+                </div>
+            </article>
+            <!-- <article class="item">
             <div class="sub-item imagen">
-                <img src="../static/img/Samsung S23.webp" alt="Samsung S23" title="Conocer más" class="celular">
+                <img src="../static/img/SM-23.webp" alt="Samsung S23" title="Conocer más" class="celular">
             </div>
             <div class="sub-item modelo">
                 <h3>Samsung Galaxy S23</h3>
@@ -34,16 +86,15 @@
             </div>
             <div class="sub-item form">
                 <form action="" method="POST">
-                    <button class="form__reducir">-</button>
+                    <button class="form__reducir" @click.prevent="reducir($event)">-</button>
                     <input type="text" value="0" class="form__cantidad" readonly>
-                    <button class="form__aumentar">+</button>
-
+                    <button class="form__aumentar" @click.prevent="aumentar($event,5)">+</button>
                 </form>
             </div>
         </article>
         <article class="item">
             <div class="sub-item">
-                <img src="../static/img/Samsung S23 Plus.jpg" alt="Samsung S23" title="Conocer más" class="celular">
+                <img src="../static/img/SM-23.webp" alt="Samsung S23" title="Conocer más" class="celular">
             </div>
             <div class="sub-item modelo">
                 <h3>Samsung Galaxy S23</h3>
@@ -55,24 +106,86 @@
                 Sin Stock
             </div>
             <div class="sub-item cantidad hidden">
+                <button class="reducir" @click.prevent="reducir(producto.id)">-</button>
                 <form action="" method="POST">
-                    <button id="reducir">-</button>
-                    <input type="text" value="0" id="cantidad" readonly>
-                    <button id="aumentar">+</button>
+                    <input type="text" value="0" class="cantidad" readonly>
+                </form>
+                <button class="aumentar" @click.prevent="aumentar(producto.if)">+</button>
 
+            </div>
+        </article>
+        <article class="item">
+            <div class="sub-item imagen">
+                <img src="../static/img/SM-23.webp" alt="Samsung S23" title="Conocer más" class="celular">
+            </div>
+            <div class="sub-item modelo">
+                <h3>Samsung Galaxy S23</h3>
+            </div>
+            <div class="sub-item precio">
+                <h3>$120.000</h3>
+            </div>
+            <div class="sub-item stock " v-if="">
+                Sin Stock
+            </div>
+            <div class="sub-item form hidden">
+                <form action="" method="POST">
+                    <button class="form__reducir" @click.prevent="reducir($event)">-</button>
+                    <input type="text" value="0" class="form__cantidad" readonly>
+                    <button class="form__aumentar" @click.prevent="aumentar($event,5)">+</button>
                 </form>
             </div>
         </article>
-       
-       
-    </section>
+        <article class="item">
+            <div class="sub-item imagen">
+                <img src="../static/img/SM-23.webp" alt="Samsung S23" title="Conocer más" class="celular">
+            </div>
+            <div class="sub-item modelo">
+                <h3>Samsung Galaxy S23</h3>
+            </div>
+            <div class="sub-item precio">
+                <h3>$120.000</h3>
+            </div>
+            <div class="sub-item stock hidden" v-if="">
+                Sin Stock
+            </div>
+            <div class="sub-item form">
+                <form action="" method="POST">
+                    <button class="form__reducir" @click.prevent="reducir($event)">-</button>
+                    <input type="text" value="0" class="form__cantidad" readonly>
+                    <button class="form__aumentar" @click.prevent="aumentar($event,5)">+</button>
+                </form>
+            </div>
+        </article>
+        <article class="item">
+            <div class="sub-item imagen">
+                <img src="../static/img/SM-23.webp" alt="Samsung S23" title="Conocer más" class="celular">
+            </div>
+            <div class="sub-item modelo">
+                <h3>Samsung Galaxy S23</h3>
+            </div>
+            <div class="sub-item precio">
+                <h3>$120.000</h3>
+            </div>
+            <div class="sub-item stock " v-if="">
+                Sin Stock
+            </div>
+            <div class="sub-item form hidden">
+                <form action="" method="POST">
+                    <button class="form__reducir" @click.prevent="reducir($event)">-</button>
+                    <input type="text" value="0" class="form__cantidad" readonly>
+                    <button class="form__aumentar" @click.prevent="aumentar($event,5)">+</button>
+                </form>
+            </div>
+        </article> -->
+        </section>
 
 
-</main>
-<footer>
-</footer>
+    </main>
+    <footer>
+    </footer>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="app.js"></script>
+    <script src="../static/js/app.js"></script>
 </body>
+
 </html>
