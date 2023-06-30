@@ -7,7 +7,7 @@ html {
 }
 .container {
     max-width: 1200px;
-    margin: 0 5rem;
+    margin: 0 auto;
 }
 /* ----- Estilos del header ----- */
 header {
@@ -20,10 +20,13 @@ nav{
     justify-content: space-between;
     gap: .5rem;
 
+
 }
 .logo{
     height: 80px;
     width: 100px;
+    margin: 0 2rem;
+
 }
 .logo img{
     height: 100%;
@@ -45,6 +48,8 @@ nav{
 }
 .iconos{
     gap: 1rem;
+    margin: 0 2rem;
+
 
 }
 .menu__links a {
@@ -58,19 +63,27 @@ nav{
     color: #46956a;
 }
 
-.activo {
+#activo {
     color: #46956a;
 }
 
 /* ----- Estilos del catálogo ----- */
 
-
+.titulo{
+    margin: 2rem;
+    text-align: center;
+}
+.titulo p{
+    font-size: 1.1rem;
+    color: #444;
+}
 .container-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     justify-content: space-between;
     gap: 2rem 7rem;
     justify-items: center;
+    margin: 0 2rem;
 
 }
 
@@ -98,6 +111,7 @@ nav{
     object-fit: cover;
     border-radius: 10px 10px 0 0;
     border-bottom: 2px solid rgba(170, 170, 170, 0.7);
+    cursor: pointer;
 }
 
 .sub-item h3 {
@@ -131,9 +145,94 @@ nav{
     position: absolute;
     bottom: .5rem;
 }
+.form__cantidad{
+    width: 2.5rem;
+    height: 1.5rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+.form__reducir, .form__aumentar{
+    height: 1.7rem;
+    width: 1.5rem;
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: #1e1e1e;
+    color: #CCC;
+    border-radius: 0 10px 10px 0;
+}
+.form__reducir{
+    border-radius: 10px 0px 0px 10px;
+}
+.form__agregar{
+    background-color: #CCC;
+    border: none;
+    cursor: pointer;
 
-.hidden {
-    display: none;
+}
+.flex-container{
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+.form__agregar img{
+    fill: #1e1e1e;
+    height: 1.7rem;
+    width: 2rem;
+    border-radius: 0;
+    padding: .5rem;
+}
+.especificacion{
+    background-color: #ccc;
+    width: 0;
+    height: 75%;
+    overflow: auto;
+    position: fixed; 
+    left: 0; 
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow:0px 0px 100000px 100000px rgba(0, 0, 0, 0.7);
+    transition: opacity 1s ease, width 1s ease;
+    opacity: 0;
+}
+
+#cerrar{
+    background-color: #fff;
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    font-size:1.5rem;
+    cursor: pointer;
+}
+
+.img_celular{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+}
+.img_celular img{
+    width: 100%;
+    max-width: 300px;
+    object-fit: cover;
+}
+.especificacion h2{
+    text-align: center;
+    font-size: 1.5rem;
+}
+.listado_espec{
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    list-style: none;
+}
+.listado_espec li{
+    padding: .5rem;
 }
 @media screen and (max-width: 768px)  {
     .container {

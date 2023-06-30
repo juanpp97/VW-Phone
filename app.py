@@ -11,6 +11,10 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
+@app.route("/admin")
+def admin():
+    return render_template("admin.html")
+
 @app.route("/stock", methods=["GET", "POST"])
 def obtener_datos():
     if request.method == "GET":
@@ -24,15 +28,16 @@ def obtener_datos():
         datos=[]
         for celular in celulares:       
             datos.append(Celular(columnas, celular).diccionario())          
-        #En caso de error se controla desde JS
         cursor.close()
         cnx.close()
+        #En caso de error se controla desde JS
         return jsonify(datos)
 
 
 @app.route("/api/<id>", methods = ['GET'])
 def get_id(id):
-    cursor = database.db.cursor()
+    cnx = conectar()
+    cursor = cnx.cursor()
     cursor.execute(f"SELECT * FROM stock WHERE id = {id}")
 
     #Devuelve una lista de tuplas

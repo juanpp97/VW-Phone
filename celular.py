@@ -17,10 +17,6 @@ class Celular:
         for indice, clave in enumerate(self.nombres):
             if clave == 'valor_unitario':
                 datos[clave] = self.formato(str(self.valores[indice]))
-            # elif "memoria" in clave:
-            #     datos[clave] = self.valores[indice].split(" ")[0].upper() + " " + self.valores[indice].split(" ")[1].upper()
-            # elif "camara" in clave:
-            #     datos[clave] = self.valores[indice].split(" ")[0] + " MP"
             else:
                 datos[clave] = self.valores[indice]
         return datos

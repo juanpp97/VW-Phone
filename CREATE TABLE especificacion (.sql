@@ -7,7 +7,7 @@ CREATE TABLE especificacion (
     memoria_ram VARCHAR(20) NOT NULL DEFAULT "",
     tamaño_pantalla VARCHAR(20) NOT NULL DEFAULT "",
     pantalla_tipo VARCHAR(50) NOT NULL DEFAULT "",
-    pantalla_resolución VARCHAR(50) NOT NULL DEFAULT "",
+    pantalla_resolucion VARCHAR(50) NOT NULL DEFAULT "",
     tipo_de_red VARCHAR(3) NOT NULL DEFAULT "",
     wi_fi VARCHAR(2) NOT NULL DEFAULT "",
     puerto_micro_usb VARCHAR(50) NOT NULL DEFAULT "",

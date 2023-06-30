@@ -6,6 +6,9 @@ let app = Vue.createApp({
             url: '/stock',
             error: false,
             mensaje: "",
+            esp: false,
+            celularSeleccionado: {},
+
         }
     },
     /*Cambio los delimitadores para evitar colisiones con Flask*/
@@ -35,7 +38,29 @@ let app = Vue.createApp({
             valorCantidad =  event.target.parentElement.children[1].value;
             if(valorCantidad > 0) event.target.parentElement.children[1].value-- 
 
-        }
+        },
+        abrirEsp(id) {
+            this.$refs.celulares.style.pointerEvents = "none";
+            const pos = this.productos.map(e => e.id).indexOf(id);
+            this.celularSeleccionado = this.productos[pos]
+            this.esp = true;
+
+            setTimeout(() => {
+                this.$refs.espec.style.opacity = 1;
+                this.$refs.espec.style.width = 40 + "%";
+
+            }, 1)
+        },
+        cerrarEsp(event) {
+            event.preventDefault();
+            this.$refs.espec.style.opacity = 0;
+            this.$refs.espec.style.width = 0 + "px";
+            this.$refs.celulares.style.pointerEvents = "auto";
+
+            setTimeout(() => {
+                this.esp = false;               
+            }, 1000)
+        },
     }
 })
 app.mount("#app")
