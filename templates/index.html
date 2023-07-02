@@ -16,7 +16,7 @@
     <header>
         <nav class="container">
             <picture class="logo">
-                <img src="{{url_for('static', filename='img/logo.webp')}}" alt="VW Phone">
+                <img src="{{url_for('static', filename='img/logo.png')}}" alt="VW Phone">
             </picture>
             <div class="menu">
                 <ul class="menu__links">
@@ -30,7 +30,7 @@
             <div class="menu">
                 <ul class="menu__links iconos">
                     <li><a href="" class=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a></li>
-                    <li><a href="" class=""><img src="{{url_for('static', filename='img/carrito.svg')}}" alt=""></a></li>
+                    <li><a href="{{url_for('carrito')}}" class=""><img src="{{url_for('static', filename='img/carrito.svg')}}" alt=""></a></li>
                 </ul>
             </div>
 

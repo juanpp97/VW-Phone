@@ -1,9 +1,11 @@
 html {
     font-family: 'Poppins', sans-serif;
 }
-body{
+
+body {
     background-color: #ebebf4;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -294,7 +296,7 @@ tbody tr:nth-child(2n+1) {
     background-color: rgb(30, 30, 30, .8);
 }
 
-table img {
+.img_prod {
     height: 100px;
     width: 100px;
     object-fit: cover;
@@ -309,7 +311,7 @@ table img {
     color: white;
     border: none;
     cursor: pointer;
-
+    border-radius: 10px 0 0 10px;
 }
 
 .delete {
@@ -318,6 +320,8 @@ table img {
     border: none;
     cursor: pointer;
     background-color: #F85149;
+    border-radius: 0 10px 10px 0;
+
 }
 
 .edit img,
@@ -338,15 +342,185 @@ button:hover {
     color: #000;
     padding: .5rem;
     border-radius: 10px;
+    cursor: pointer;
 }
-.titulo_tabla{
+
+.titulo_tabla {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
 
-/* Responsive styles */
+/* Formulario de administración */
+
+
+
+
+
+.titulo {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.titulo span {
+    color: #b70e21;
+}
+
+.estilo_form {
+    background: #222222;
+    padding: 1rem;
+    background-color: #222;
+    width: 0;
+    max-width: 800px;
+    color: #ccc;
+    height: 75%;
+    overflow: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 1.5em;
+    transition: opacity 1s ease, width 1s ease;
+    border-radius: 10px;
+    box-shadow: 0px 0px 100000px 100000px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+
+
+}
+.estilo_form h5{
+    margin: -2rem 0 1rem;
+
+    text-align: center;
+}
+.estilo_form form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.estilo_form form label {
+    display: block;
+}
+
+.estilo_form form div {
+    margin: 0;
+    padding: 1rem;
+}
+
+.enviar {
+    align-self: flex-end;
+}
+
+.estilo_form form button,
+.estilo_form form input,
+.estilo_form form textarea {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: 0;
+    color: #fff;
+    border-bottom: 1px solid #d63031;
+}
+
+.estilo_form form button {
+    background: #B70E21;
+    border: 0;
+    border-radius: 10px;
+    text-transform: uppercase;
+    padding: 1em;
+}
+
+.estilo_form form button:hover,
+.estilo_form form button:focus {
+    background: #19b55f;
+    color: #181818;
+    transition: background-color 1s ease, color 1s ease;
+    outline: 0;
+}
+input[type="radio"]{
+    transform: scale(0.6);
+}
+.radio-option {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+}
+
+.radio-option span {
+    display: flex;
+    justify-self: start;
+    align-self: start;
+}
+
+
+.cerrar_form {
+    background-color: #222;
+    color: #ccc;
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+
+}
+/*Estilos del carrito*/
+  
+
+
+  
+  .cantidad {
+    padding: 5px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    box-shadow: 15px 10px 10px rgba(37, 37, 37, 0.941);
+   }
+  
+  .cart-total {
+    text-align: right;
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 10px;
+  }
+  
+  .cart-actions {
+    text-align: right;
+    margin-top: 20px;
+  }
+  
+  
+
+  .btn {
+    padding: 8px 12px;
+    background-color:#9f0a28;
+    color: #fff;
+    border: solid 1px black;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 5px 5px 5px rgba(16, 14, 14, 0.941);
+  }
+  .btn-add{
+    background-color:#1561F0;
+
+  }
+
+
+
+  .btn:hover {
+    background-color: #1561F0;
+  }
+tfoot{
+    color: #000;
+}
+
+
 @media screen and (max-width: 600px) {
     * {
         font-size: 12px;
@@ -371,5 +545,29 @@ button:hover {
 @media screen and (max-width: 768px) {
     .container {
         margin: 0 1rem;
+    }
+
+    body {
+        padding: 0 4em;
+    }
+
+    .estilo_form form {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .radio-option {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: self-start;
+    }
+
+    .radio-option span {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        justify-content: end;
+        place-items: center;
     }
 }

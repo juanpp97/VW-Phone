@@ -8,6 +8,9 @@ let app = Vue.createApp({
             mensaje: "",
             esp: false,
             celularSeleccionado: {},
+            formAdmin: false,
+            add: true,
+
 
         }
     },
@@ -54,7 +57,7 @@ let app = Vue.createApp({
         cerrarEsp(event) {
             event.preventDefault();
             this.$refs.espec.style.opacity = 0;
-            this.$refs.espec.style.width = 0 + "px";
+            this.$refs.espec.style.width = 0 + "%";
 
             setTimeout(() => {
                 this.esp = false;
@@ -62,6 +65,35 @@ let app = Vue.createApp({
         
             }, 1000)
         },
+        abrirForm(id=undefined){
+            if(id === undefined){
+                this.add = true;
+                this.celularSeleccionado = {};
+            }else{
+                this.add = false;
+
+                const pos = this.productos.map(e => e.id).indexOf(id);
+                this.celularSeleccionado = this.productos[pos]
+            }
+            this.$refs.tabla.style.pointerEvents = "none";
+            this.formAdmin = true;
+
+            setTimeout(() => {
+                this.$refs.formAd.style.opacity = 1;
+                this.$refs.formAd.style.width = 80 + "%";
+
+            }, 1)
+        },
+        cerrarNuevo(){
+            this.$refs.formAd.style.opacity = 0;
+            this.$refs.formAd.style.width = 0 + "%";
+
+            setTimeout(() => {
+                this.formAdmin = false;
+                this.$refs.tabla.style.pointerEvents = "auto";
+        
+            }, 1000)
+        }
     }
 })
 app.mount("#app")

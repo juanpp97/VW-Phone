@@ -15,6 +15,16 @@ def index():
 def admin():
     return render_template("admin.html")
 
+@app.route("/carrito")
+def carrito():
+    return render_template("carrito.html")
+# @app.route("/carrito")
+# def admin():
+#     if select count == 0
+#     redirect("/")
+#     else
+#     return render_template("carrito.html")
+
 @app.route("/stock", methods=["GET", "POST"])
 def obtener_datos():
     if request.method == "GET":
@@ -34,20 +44,20 @@ def obtener_datos():
         return jsonify(datos)
 
 
-@app.route("/api/<id>", methods = ['GET'])
-def get_id(id):
-    cnx = conectar()
-    cursor = cnx.cursor()
-    cursor.execute(f"SELECT * FROM stock WHERE id = {id}")
+# @app.route("/api/<id>", methods = ['GET'])
+# def get_id(id):
+#     cnx = conectar()
+#     cursor = cnx.cursor()
+#     cursor.execute(f"SELECT * FROM stock WHERE id = {id}")
 
-    #Devuelve una lista de tuplas
-    resultado = cursor.fetchall()
-    datos = []
-    for stock in resultado:
-        dato = {'id': stock[0], 
-                'imagen': stock[1]}
-        datos.append(dato)
-    return jsonify(datos)
+#     #Devuelve una lista de tuplas
+#     resultado = cursor.fetchall()
+#     datos = []
+#     for stock in resultado:
+#         dato = {'id': stock[0], 
+#                 'imagen': stock[1]}
+#         datos.append(dato)
+#     return jsonify(datos)
 
 
 
