@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/styles.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+    <title>Catálogo</title>
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="container">
+            <picture class="logo">
+                <img src="{{url_for('static', filename='img/logo.webp')}}" alt="VW Phone">
+            </picture>
+            <div class="menu">
+                <ul class="menu__links">
+                    <li><a href="" class="inicio">Inicio</a></li>
+                    <li><a href="{{url_for('index')}}" >Catálogo</a></li>
+                    <li><a href="hospitales.html">¿Quienes Somos?</a></li>
+                    <li><a href="conocenos.html" id="activo">Administración</a></li>
+                </ul>
+
+            </div>
+            <div class="menu">
+                <ul class="menu__links iconos">
+                    <li><a href="" class=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a></li>
+                    <li><a href="" class=""><img src="{{url_for('static', filename='img/carrito.svg')}}" alt=""></a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+
+    <main class="container" id="app" v-cloak>
+      
+
+        <div class="tabla" ref="tabla">
+            <table v-if="!error">
+                    <thead>
+                        <tr>
+                            
+
+                            <th colspan="7">
+                                <div class="titulo_tabla">
+                                <button class="agregar" @click.prevent="abrirNuevo()"> + Agregar un nuevo celular</button>
+                                <p>Stock</p>
+                            </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Imagen</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    <tr v-for="producto in productos">
+                        <td>[[producto.id]]</td>
+
+                        <td>[[producto.codigo_modelo]]</td>
+                        <td>[[producto.marca === "Apple"
+                            ? producto.nombre_modelo
+                            : producto.marca + " " + producto.nombre_modelo]]</td>
+                        <td>[[producto.cantidad]]</td>
+                        <td>[[producto.valor_unitario]]</td>
+                        <td><img :src="{{url_for('static', filename='')}} + 'img/' + producto.imagen_modelo" alt="Imagen 2"></td>
+                        <td>
+                            <button class="edit" @click="abrirEditar()"><img src="../static/img/editar.svg" alt=""></button>
+                            <button class="delete" @click="borrar(producto.codigo, producto.imagen)"><img src="../static/img/borrar.svg" alt=""></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </main>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="../static/js/app.js"></script>
+
+</body>
+
+</html>

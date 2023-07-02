@@ -55,10 +55,11 @@ let app = Vue.createApp({
             event.preventDefault();
             this.$refs.espec.style.opacity = 0;
             this.$refs.espec.style.width = 0 + "px";
-            this.$refs.celulares.style.pointerEvents = "auto";
 
             setTimeout(() => {
-                this.esp = false;               
+                this.esp = false;
+                this.$refs.celulares.style.pointerEvents = "auto";
+        
             }, 1000)
         },
     }
