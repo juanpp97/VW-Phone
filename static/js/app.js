@@ -10,8 +10,8 @@ let app = Vue.createApp({
             celularSeleccionado: {},
             formAdmin: false,
             add: true,
-
-
+            errorForm: false,
+            mensajeForm: "",
         }
     },
     /*Cambio los delimitadores para evitar colisiones con Flask*/
@@ -84,7 +84,7 @@ let app = Vue.createApp({
 
             }, 1)
         },
-        cerrarNuevo(){
+        cerrarForm(){
             this.$refs.formAd.style.opacity = 0;
             this.$refs.formAd.style.width = 0 + "%";
 
@@ -93,7 +93,77 @@ let app = Vue.createApp({
                 this.$refs.tabla.style.pointerEvents = "auto";
         
             }, 1000)
+        },
+        fade(){
+            this.temp = setTimeout(() => {
+                try {
+                    this.$refs.error.style.opacity = 0;
+                } catch {}
+                setTimeout(() => {
+                    this.errorForm = false;
+                }, 750)
+            }, 3000)
+
+        },
+        enviarForm(event){
+            imagen = this.$refs.imagen.value;
+            if(imagen == "" && this.add){
+                event.preventDefault();
+                this.errorForm = true;
+                this.mensajeForm = "Debe seleccionar una imagen antes de enviar"
+
+                this.$refs.formAd.scrollTo({ top: 0, behavior: "smooth" });
+                this.fade();
+                return
+            }
+            for(atributo in this.celularSeleccionado){
+                if(this.celularSeleccionado[atributo] == ""){
+                    event.preventDefault();
+                    this.errorForm = true;
+                    this.mensajeForm = "Complete todos los campos antes de enviar"
+
+                    this.$refs.formAd.scrollTo({ top: 0, behavior: "smooth" });
+                    this.fade();
+                    return
+                }
+            }
+        if(Number(this.celularSeleccionado.cantidad) == NaN){
+            event.preventDefault();
+            this.errorForm = true;
+            this.mensajeForm = "La cantidad debe ser numérica"
+            this.$refs.formAd.scrollTo({ top: 0, behavior: "smooth" });
+            this.fade();
+            return
         }
+        },
+        eliminar_caracter(cadena, caracter) {
+            if (cadena.endsWith(caracter)) {
+                if (cadena.split(caracter).length > 2) {
+                    return cadena.split(caracter)[1];
+                } else {
+                    return cadena.slice(0, -1);
+                }
+            }
+            return cadena;
+        },
+        formato() {
+            precio = this.celularSeleccionado.valor_unitario;
+            precio = this.eliminar_caracter(precio, "$");
+            this.celularSeleccionado.valor_unitario = precio;
+            let decimal = "";
+            if (precio.includes(",")) {
+                [precio, decimal] = precio.split(",");
+                decimal = "," + decimal;
+            }
+            precio = precio.replace("$", "");
+
+            let precioConPuntos = precio.replace(/\./g, "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+            this.celularSeleccionado.valor_unitario = "$" + precioConPuntos + decimal;
+            //Convertir a numerico
+            console.log(precio.slice(1).replace(/\./g, "").replace(",", "."))
+
+        },
+
     }
 })
 app.mount("#app")

@@ -354,10 +354,6 @@ button:hover {
 
 /* Formulario de administración */
 
-
-
-
-
 .titulo {
     text-align: center;
     font-size: 2rem;
@@ -390,11 +386,13 @@ button:hover {
 
 
 }
-.estilo_form h5{
+
+.estilo_form h5 {
     margin: -2rem 0 1rem;
 
     text-align: center;
 }
+
 .estilo_form form {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -440,9 +438,11 @@ button:hover {
     transition: background-color 1s ease, color 1s ease;
     outline: 0;
 }
-input[type="radio"]{
+
+input[type="radio"] {
     transform: scale(0.6);
 }
+
 .radio-option {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -471,84 +471,76 @@ input[type="radio"]{
     cursor: pointer;
 
 }
+.mensaje {
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: rgb(255, 0, 0, 0.2);
+    color: #F00;
+    padding: 1rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: opacity 1s ease;
+}
+.error_form{
+    background-color: rgb(214, 48, 49,.5);
+    color: #CCC;
+}
 /*Estilos del carrito*/
-  
 
 
-  
-  .cantidad {
+.cantidad {
     padding: 5px;
     border: 1px solid #000000;
     border-radius: 4px;
     box-shadow: 15px 10px 10px rgba(37, 37, 37, 0.941);
-   }
-  
-  .cart-total {
+}
+
+.cart-total {
     text-align: right;
     font-weight: bold;
     margin-top: 10px;
     padding: 10px;
-  }
-  
-  .cart-actions {
+}
+
+.cart-actions {
     text-align: right;
     margin-top: 20px;
-  }
-  
-  
+}
 
-  .btn {
+
+
+.btn {
     padding: 8px 12px;
-    background-color:#9f0a28;
+    background-color: #9f0a28;
     color: #fff;
     border: solid 1px black;
     cursor: pointer;
     border-radius: 4px;
     box-shadow: 5px 5px 5px rgba(16, 14, 14, 0.941);
-  }
-  .btn-add{
-    background-color:#1561F0;
+}
 
-  }
-
-
-
-  .btn:hover {
+.btn-add {
     background-color: #1561F0;
-  }
-tfoot{
+
+}
+
+
+
+.btn:hover {
+    background-color: #1561F0;
+}
+
+tfoot {
     color: #000;
 }
 
 
-@media screen and (max-width: 600px) {
-    * {
-        font-size: 12px;
-    }
-
-    th,
-    td {
-        padding: 5px;
-    }
-
-    img {
-        max-width: 30px;
-        max-height: 30px;
-    }
-
-    button {
-        padding: 3px 6px;
-    }
-}
 
 
 @media screen and (max-width: 768px) {
     .container {
         margin: 0 1rem;
-    }
-
-    body {
-        padding: 0 4em;
     }
 
     .estilo_form form {
@@ -569,5 +561,64 @@ tfoot{
         gap: 1rem;
         justify-content: end;
         place-items: center;
+    }
+    .img_prod {
+        height: 60px;
+        width: 60px;
+    }
+    
+    .edit {
+        padding: 5px;
+    }
+    
+    .delete {
+        padding: 5px;
+
+    }
+    
+    .edit img,
+    .delete img {
+        height: 15px;
+        width: 15px;
+    }
+    input[type="radio"] {
+        transform: scale(1);
+    }
+}
+@media screen and (max-width: 600px) {
+    .tabla table {
+        width:100%;
+    }
+    .tabla thead tr:nth-child(1) {
+        display: none;
+    }
+    .tabla thead tr:nth-child(2) {
+        display: none;
+    }
+    .agregar{
+        display: block;
+    }
+    .tabla tr td:first-child {
+        background: rgb(20, 20, 20,.5);
+        font-weight:bold;
+        font-size:1.3em;
+    }
+    .tabla tbody td {
+        display: block;
+        text-align:center;
+    }
+    .tabla tbody td:before {
+        display: block;
+        text-align:center;
+    }
+       
+    .edit img,
+    .delete img {
+        height: 25px;
+        width: 25px;
+    }
+    .img_prod {
+        height: 80px;
+        width: 80px;
     }
 }

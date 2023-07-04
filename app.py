@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from database import conectar, cerrar
 from celular import Celular
 import os
@@ -43,7 +43,9 @@ def obtener_datos():
         #En caso de error se controla desde JS
         return jsonify(datos)
 
-
+@app.route("/agregar", methods=["POST"])
+def agregar():
+    return redirect("/admin")
 # @app.route("/api/<id>", methods = ['GET'])
 # def get_id(id):
 #     cnx = conectar()
