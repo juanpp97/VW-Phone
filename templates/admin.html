@@ -41,10 +41,9 @@
     <main class="container" id="app" v-cloak>
         {% with messages = get_flashed_messages(with_categories = True) %}
         {% if messages %}
-        <div class="mensaje">
-            El campo debe ser completado
+        <div class="{{messages[0][0]}}" v-if="hide" ref="errorFlash">
+            {{ messages[0][1] }}
         </div>
-        <p class="{{messages[0][0]}}" ref="mensaje" v-if="mostrar">{{ messages[0][1] }}</p>
         {% endif %}
         {% endwith %}
 
@@ -105,10 +104,10 @@
                 : "Editar características"]]</h2>
             <h5 v-if="!add">Si no se selecciona imagen, la misma no se modifica
             </h5>
-            <div class="mensaje error_form" v-if="errorForm" ref="error">
+            <div class="error error_form" v-if="errorForm" ref="error">
                 [[mensajeForm]]    
             </div>
-            <form action="{{url_for('agregar')}}" method="POST">
+            <form action="{{url_for('agregar')}}" method="POST" enctype="multipart/form-data">
 
                 <div>
                     <label for="imagen_modelo">Imagen del Modelo:</label>

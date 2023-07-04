@@ -471,12 +471,23 @@ input[type="radio"] {
     cursor: pointer;
 
 }
-.mensaje {
+.error {
     box-sizing: border-box;
     width: 100%;
     margin-bottom: 1rem;
     background-color: rgb(255, 0, 0, 0.2);
     color: #F00;
+    padding: 1rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: opacity 1s ease;
+}
+.exito{
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: rgb(0, 255, 0, 0.2);
+    color: #004173;
     padding: 1rem;
     border-radius: 15px;
     text-align: center;

@@ -12,12 +12,14 @@ let app = Vue.createApp({
             add: true,
             errorForm: false,
             mensajeForm: "",
+            hide: true,
         }
     },
     /*Cambio los delimitadores para evitar colisiones con Flask*/
     delimiters: ["[[", "]]"],
     created() {
-        this.obtenerProductos()
+        this.obtenerProductos();
+        this.fade()
     },
     methods:{
         obtenerProductos(){
@@ -98,9 +100,11 @@ let app = Vue.createApp({
             this.temp = setTimeout(() => {
                 try {
                     this.$refs.error.style.opacity = 0;
+                    this.$refs.errorFlash.style.opacity = 0;
                 } catch {}
                 setTimeout(() => {
                     this.errorForm = false;
+                    this.hide = false;
                 }, 750)
             }, 3000)
 
@@ -127,7 +131,7 @@ let app = Vue.createApp({
                     return
                 }
             }
-        if(Number(this.celularSeleccionado.cantidad) == NaN){
+        if(isNaN(Number(this.celularSeleccionado.cantidad))){
             event.preventDefault();
             this.errorForm = true;
             this.mensajeForm = "La cantidad debe ser numérica"
