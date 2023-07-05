@@ -13,6 +13,12 @@ let app = Vue.createApp({
             errorForm: false,
             mensajeForm: "",
             hide: true,
+            data: {},
+            errorBorrar: false,
+            mensajeBorrar: "",
+            advertencia: false,
+            mensajeAdv: "",
+
         }
     },
     /*Cambio los delimitadores para evitar colisiones con Flask*/
@@ -22,7 +28,7 @@ let app = Vue.createApp({
         this.fade()
     },
     methods:{
-        obtenerProductos(){
+        async obtenerProductos(){
             fetch(this.url)
             .then(res => res.json())
             .then(productos => {
@@ -119,9 +125,10 @@ let app = Vue.createApp({
                 this.$refs.formAd.scrollTo({ top: 0, behavior: "smooth" });
                 this.fade();
                 return
-            }
+            }else
             for(atributo in this.celularSeleccionado){
-                if(this.celularSeleccionado[atributo] == ""){
+                if(atributo === "imagen_modelo") continue
+                if(this.celularSeleccionado[atributo] === ""){
                     event.preventDefault();
                     this.errorForm = true;
                     this.mensajeForm = "Complete todos los campos antes de enviar"
@@ -166,6 +173,48 @@ let app = Vue.createApp({
             //Convertir a numerico
             console.log(precio.slice(1).replace(/\./g, "").replace(",", "."))
 
+        },
+        abrirAdv(codigo_producto, imagen){
+            this.hide = false;
+
+            this.data = { 'codigo': codigo_producto, 'imagen': imagen }
+            this.mensajeAdv = `¿Está seguro que desea borrar el producto de código ${codigo_producto}?`
+            this.$refs.tabla.style.pointerEvents = "none";
+            this.advertencia = true;
+            setTimeout(() => {
+                this.$refs.adv.style.opacity = 1;
+                this.$refs.adv.style.width = 50 + "%";
+
+            }, 1)
+        },
+        cerrarAdv(){
+            this.$refs.adv.style.opacity = 0;
+            this.$refs.adv.style.width = 0 + "%";
+
+            setTimeout(() => {
+                this.advertencia = false;
+                this.$refs.tabla.style.pointerEvents = "auto";
+        
+            }, 1000)
+        },
+        async borrar(){
+            const params = this.data
+
+            const response = await fetch('./borrar', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(params)
+            });
+            window.scrollTo({ top: 0, behavior: "smooth" });
+
+            this.data = await response.json();
+            this.advertencia = false;
+            this.$refs.tabla.style.pointerEvents = "auto";
+
+            this.hide = true;
+
+            this.fade();
+            this.obtenerProductos();
         },
 
     }

@@ -44,6 +44,7 @@ USE tienda;
 INSERT INTO especificacion(codigo_modelo, camara_principal, camara_frontal, flash, memoria_interna_rom, memoria_ram, tamaño_pantalla, pantalla_tipo, pantalla_resolucion, tipo_de_red, wi_fi, puerto_micro_usb, gps, nfc, bluetooth, sistema_operativo, procesador, color, bateria, dimensiones, peso) VALUES("SM-23", "50 megapixeles", "12 megapixeles", "Si","256 gb","8 gb", "6.1 pulgadas", "Dinamic Amoled 2X", "2340 x 1080 fullHD", "5G", "Si", "Micro usb tipo c", "Si", "Si","Si", "Android", "Qualcomm Octa-Core 3.36GHz-2.8GHz-2GHz", "Phantom Black", "3900 mAh", "146.3 x 70.9 x 7.6 mm", "168 gr");
 
 INSERT INTO especificacion(codigo_modelo, camara_principal, camara_frontal, flash, memoria_interna_rom, memoria_ram, tamaño_pantalla, pantalla_tipo, pantalla_resolucion, tipo_de_red, wi_fi, puerto_micro_usb, gps, nfc, bluetooth, sistema_operativo, procesador, color, bateria, dimensiones, peso) VALUES("SM-23P", "50 megapixeles", "12 megapixeles", "Si","256 gb","8 gb", "6.6 pulgadas", "Dinamic Amoled 2X", "2340 x 1080 fullHD", "5G", "Si", "Micro usb tipo c", "Si", "Si","Si", "Android", "Qualcomm Octa-Core 3.36GHz-2.8GHz-2GHz", "Phantom Black", "4700 mAh", "157.8 x 76.2 x 7.6 mm", "195 gr");
+USE tienda;
 
 INSERT INTO especificacion(codigo_modelo, camara_principal, camara_frontal, flash, memoria_interna_rom, memoria_ram, tamaño_pantalla, pantalla_tipo, pantalla_resolucion, tipo_de_red, wi_fi, puerto_micro_usb, gps, nfc, bluetooth, sistema_operativo, procesador, color, bateria, dimensiones, peso) VALUES("SM-23U", "200 megapixeles", "12 megapixeles", "Si","256 gb","8 gb", "6.8 pulgadas", "Dinamic Amoled 2X", "3088 x 1440 quadHD", "5G", "Si", "Micro usb tipo c", "Si", "Si","Si", "Android", "Qualcomm Octa-Core 3.36GHz-2.8GHz-2GHz", "Phantom Black", "5000 mAh", "163.4 x 78.1 x 8.9 mm", "233 gr");
 
@@ -101,6 +102,7 @@ INSERT INTO especificacion(codigo_modelo, camara_principal, camara_frontal, flas
 
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("SM-23.webp", "S23 ","Smartphone","SM-23","Samsung","369999.00",50);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("SM-23P.webp", "S23 Plus","Smartphone","SM-23P","Samsung","509999.00",0);
+USE tienda;
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("SM-23U.webp","S23 Ultra","Smartphone","SM-23U","Samsung","369999.00",15);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("SM-54.webp", "A54","Smartphone","SM-54","Samsung","226999.00",0);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("SM-22.webp", "S22","Smartphone","SM-22","Samsung","279999.00",30);
@@ -125,7 +127,9 @@ INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, mar
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("A-71.webp", "Blade A71","Smartphone","A-71","ZTE","44999.00",12);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("A-53.webp", "Blade A53","Smartphone","A-53","ZTE","42999.00",13);
 INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("V-30.webp", "Blade V30","Smartphone","V-30","ZTE","58799.00",0);
-SELECT * FROM stock INNER JOIN especificacion ON stock.codigo_modelo = especificacion.modelo
+USE tienda;
+SELECT * FROM stock, especificacion
+SELECT * FROM stock INNER JOIN especificacion ON stock.codigo_modelo = especificacion.codigo_modelo ORDER BY stock.id
 
 
 DELETE stock, especificacion FROM stock JOIN especificacion ON stock.codigo_modelo = especificacion.modelo WHERE stock.codigo_modelo LIKE 'SM-23' OR especificacion.modelo LIKE 'SM-23';
@@ -141,4 +145,41 @@ WHERE stock.codigo_modelo LIKE 'SM-23' OR especificacion.modelo LIKE 'SM-23';
 /* SELECT nombre_modelo, marca, valor_unitario, cantidad FROM stock*/
 SELECT COUNT(*) as numero FROM stock
 USE tienda;
+
+SHOW CREATE TABLE stock;
 DELETE stock, especificacion FROM stock JOIN especificacion ON stock.codigo_modelo = especificacion.codigo_modelo;
+USE tienda;
+
+ALTER TABLE stock DROP FOREIGN KEY fstock;
+DELETE stock,especificacion FROM stock JOIN especificacion ON stock.codigo_modelo = especificacion.codigo_modelo WHERE stock.codigo_modelo LIKE 'N-9S' OR especificacion.codigo_modelo LIKE 'N-9S';
+ALTER TABLE stock ADD CONSTRAINT `fstock` FOREIGN KEY (codigo_modelo) REFERENCES especificacion(codigo_modelo);
+UPDATE stock
+JOIN especificacion ON stock.codigo_modelo = especificacion.codigo_modelo
+SET stock.nombre_modelo = "S23",
+    stock.tipo_celular = "Smartphone",
+    stock.codigo_modelo = "SM-23",
+    especificacion.codigo_modelo = "SM-23",
+    stock.marca = "Samsung",
+    stock.valor_unitario = "369998.00",
+    stock.cantidad = "50",
+    especificacion.camara_principal = "50 megapixeles",
+    especificacion.camara_frontal = "12 megapixeles",
+    especificacion.flash = "Si",
+    especificacion.memoria_interna_rom = "256 gb",
+    especificacion.memoria_ram = "8 gb",
+    especificacion.tamaño_pantalla = "6.1 pulgadas",
+    especificacion.pantalla_tipo = "Dinamic Amoled 2X",
+    especificacion.pantalla_resolucion = "2340 x 1080 fullHD",
+    especificacion.tipo_de_red = "5G",
+    especificacion.wi_fi = "Si",
+    especificacion.puerto_micro_usb = "Micro usb tipo C",
+    especificacion.gps = "Si",
+    especificacion.nfc = "Si",
+    especificacion.bluetooth = "Si",
+    especificacion.sistema_operativo = "Android",
+    especificacion.procesador = "Qualcomm Octa-Core 3.36GHz-2.8GHz-2GHz",
+    especificacion.dimensiones = "146.3 x 70.9 x 7.6 mm",
+    especificacion.color = "Phantom Black",
+    especificacion.bateria = "3900 mAh",
+    especificacion.peso = "168 g"
+WHERE stock.id = "1";

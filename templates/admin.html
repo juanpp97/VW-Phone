@@ -46,7 +46,10 @@
         </div>
         {% endif %}
         {% endwith %}
-
+        <div :class="{error: data.error, exito: !(data.error)}"
+            v-if="!(Object.getOwnPropertyNames(data).length === 0) && hide" ref="mensaje">
+            [[data.mensaje]]
+        </div>
 
         <div class="tabla" ref="tabla">
             <table v-if="!error">
@@ -85,7 +88,8 @@
                         <td>
                             <button class="edit" @click="abrirForm(producto.id)"><img src="../static/img/editar.svg"
                                     alt=""></button>
-                            <button class="delete" @click="borrar(producto.codigo, producto.imagen)"><img
+                            <button class="delete"
+                                @click="abrirAdv(producto.codigo_modelo, producto.imagen_modelo)"><img
                                     src="../static/img/borrar.svg" alt=""></button>
                         </td>
                     </tr>
@@ -105,10 +109,11 @@
             <h5 v-if="!add">Si no se selecciona imagen, la misma no se modifica
             </h5>
             <div class="error error_form" v-if="errorForm" ref="error">
-                [[mensajeForm]]    
+                [[mensajeForm]]
             </div>
-            <form action="{{url_for('agregar')}}" method="POST" enctype="multipart/form-data">
-
+            <form :action="add ? '{{url_for('agregar')}}' : '{{url_for('editar')}}'" method="POST"
+                enctype="multipart/form-data">
+                <input type="text" name="id" id="id_producto" hidden readonly :value="celularSeleccionado.id">
                 <div>
                     <label for="imagen_modelo">Imagen del Modelo:</label>
                     <input type="file" id="imagen_modelo" name="imagen_modelo" accept="image/*" :required="add"
@@ -285,7 +290,13 @@
 
 
         </div>
+        <div class="adv" ref="adv" v-if="advertencia">
+            <p>[[mensajeAdv]]</p>
 
+            <button @click.prevent="borrar()">Si</button>
+            <button @click.prevent="cerrarAdv()">No</button>
+
+        </div>
     </main>
 
 
