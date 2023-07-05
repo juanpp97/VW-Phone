@@ -210,9 +210,6 @@ let app = Vue.createApp({
             this.data = await response.json();
             this.advertencia = false;
             this.$refs.tabla.style.pointerEvents = "auto";
-
-            this.hide = true;
-
             this.fade();
             this.obtenerProductos();
         },

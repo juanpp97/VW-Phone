@@ -21,8 +21,8 @@
             </picture>
             <div class="menu">
                 <ul class="menu__links">
-                    <li><a href="">Inicio</a></li>
-                    <li><a href="{{url_for('index')}}">Catálogo</a></li>
+                    <li><a href="{{url_for('index')}}">Inicio</a></li>
+                    <li><a href="{{url_for('catalogo')}}">Catálogo</a></li>
                     <li><a href="{{url_for('admin')}}" id="activo">Administración</a></li>
                 </ul>
 
@@ -184,9 +184,9 @@
                         v-model="celularSeleccionado.memoria_ram">
                 </div>
                 <div>
-                    <label for="tamaño_pantalla">Tamaño de Pantalla:</label>
-                    <input type="text" id="tamaño_pantalla" name="tamaño_pantalla" required
-                        placeholder="Ej: 6.43 pulgadas" v-model="celularSeleccionado.tamaño_pantalla">
+                    <label for="tamanio_pantalla">Tamaño de Pantalla:</label>
+                    <input type="text" id="tamanio_pantalla" name="tamanio_pantalla" required
+                        placeholder="Ej: 6.43 pulgadas" v-model="celularSeleccionado.tamanio_pantalla">
                 </div>
                 <div>
                     <label for="pantalla_tipo">Tipo de Pantalla:</label>

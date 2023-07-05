@@ -71,7 +71,7 @@ def agregar():
         flash_celular = request.form["flash"]
         memoria_rom = request.form["memoria_interna_rom"]
         memoria_ram = request.form["memoria_ram"]
-        tamaño_pantalla = request.form["tamaño_pantalla"]
+        tamanio_pantalla = request.form["tamanio_pantalla"]
         pantalla_tipo = request.form["pantalla_tipo"]
         pantalla_resolucion = request.form["pantalla_resolucion"]
         tipo_de_red = request.form["tipo_de_red"]
@@ -112,7 +112,7 @@ def agregar():
         extension = nombre_img.rsplit('.', 1)[1].lower()
         if imagen and ('.' in nombre_img and extension in ext_permitidas):
             nombre_img = secure_filename(f"{codigo_modelo}.webp")
-            cursor.execute(f'INSERT INTO especificacion(codigo_modelo, camara_principal, camara_frontal, flash, memoria_interna_rom, memoria_ram, tamaño_pantalla, pantalla_tipo, pantalla_resolucion, tipo_de_red, wi_fi, puerto_micro_usb, gps, nfc, bluetooth, sistema_operativo, procesador, color, bateria, dimensiones, peso) VALUES("{codigo_modelo}", "{camara_principal}", "{camara_frontal}", "{flash_celular}","{memoria_rom}","{memoria_ram}", "{tamaño_pantalla}", "{tipo_celular}", "{pantalla_resolucion}", "{tipo_de_red}", "{wifi}", "{usb}", "{gps}", "{nfc}","{bt}", "{sist_op}", "{procesador}", "{color}", "{bateria}", "{dimensiones}", "{peso}")')
+            cursor.execute(f'INSERT INTO especificacion(codigo_modelo, camara_principal, camara_frontal, flash, memoria_interna_rom, memoria_ram, tamanio_pantalla, pantalla_tipo, pantalla_resolucion, tipo_de_red, wi_fi, puerto_micro_usb, gps, nfc, bluetooth, sistema_operativo, procesador, color, bateria, dimensiones, peso) VALUES("{codigo_modelo}", "{camara_principal}", "{camara_frontal}", "{flash_celular}","{memoria_rom}","{memoria_ram}", "{tamanio_pantalla}", "{tipo_celular}", "{pantalla_resolucion}", "{tipo_de_red}", "{wifi}", "{usb}", "{gps}", "{nfc}","{bt}", "{sist_op}", "{procesador}", "{color}", "{bateria}", "{dimensiones}", "{peso}")')
 
             cursor.execute(f'INSERT INTO stock(imagen_modelo, nombre_modelo, tipo_celular, codigo_modelo, marca, valor_unitario,cantidad) VALUES("{nombre_img}", "{nombre_modelo}","{tipo_celular}","{codigo_modelo}","{marca}","{valor_unitario}",{cantidad})')
             
@@ -169,7 +169,7 @@ def editar():
         flash_celular = request.form["flash"]
         memoria_rom = request.form["memoria_interna_rom"]
         memoria_ram = request.form["memoria_ram"]
-        tamaño_pantalla = request.form["tamaño_pantalla"]
+        tamanio_pantalla = request.form["tamanio_pantalla"]
         pantalla_tipo = request.form["pantalla_tipo"]
         pantalla_resolucion = request.form["pantalla_resolucion"]
         tipo_de_red = request.form["tipo_de_red"]
@@ -207,7 +207,7 @@ def editar():
                     return redirect(url_for('admin')) 
         if nombre_img == '':
             cursor.execute('ALTER TABLE stock DROP FOREIGN KEY fstock')
-            cursor.execute(f'UPDATE stock JOIN especificacion ON stock.codigo_modelo = especificacion.codigo_modelo SET stock.nombre_modelo = "{nombre_modelo}", stock.tipo_celular = "{tipo_celular}", stock.codigo_modelo = "{codigo_modelo}", especificacion.codigo_modelo = "{codigo_modelo}", stock.marca = "{marca}", stock.valor_unitario = "{valor_unitario}", stock.cantidad = {cantidad}, especificacion.camara_principal = "{camara_principal}", especificacion.camara_frontal = "{camara_frontal}", especificacion.flash = "{flash_celular}", especificacion.memoria_interna_rom = "{memoria_rom}", especificacion.memoria_ram = "{memoria_ram}", especificacion.tamaño_pantalla = "{tamaño_pantalla}", especificacion.pantalla_tipo = "{pantalla_tipo}", especificacion.pantalla_resolucion =  "{pantalla_resolucion}", especificacion.tipo_de_red = "{tipo_de_red}", especificacion.wi_fi = "{wifi}", especificacion.puerto_micro_usb = "{usb}", especificacion.gps = "{gps}", especificacion.nfc = "{nfc}", especificacion.bluetooth = "{bt}", especificacion.sistema_operativo = "{sist_op}", especificacion.procesador = "{procesador}", especificacion.dimensiones = "{dimensiones}", especificacion.color = "{color}", especificacion.bateria = "{bateria}", especificacion.peso = "{peso}" WHERE stock.id = {id}')
+            cursor.execute(f'UPDATE stock JOIN especificacion ON stock.codigo_modelo = especificacion.codigo_modelo SET stock.nombre_modelo = "{nombre_modelo}", stock.tipo_celular = "{tipo_celular}", stock.codigo_modelo = "{codigo_modelo}", especificacion.codigo_modelo = "{codigo_modelo}", stock.marca = "{marca}", stock.valor_unitario = "{valor_unitario}", stock.cantidad = {cantidad}, especificacion.camara_principal = "{camara_principal}", especificacion.camara_frontal = "{camara_frontal}", especificacion.flash = "{flash_celular}", especificacion.memoria_interna_rom = "{memoria_rom}", especificacion.memoria_ram = "{memoria_ram}", especificacion.tamanio_pantalla = "{tamanio_pantalla}", especificacion.pantalla_tipo = "{pantalla_tipo}", especificacion.pantalla_resolucion =  "{pantalla_resolucion}", especificacion.tipo_de_red = "{tipo_de_red}", especificacion.wi_fi = "{wifi}", especificacion.puerto_micro_usb = "{usb}", especificacion.gps = "{gps}", especificacion.nfc = "{nfc}", especificacion.bluetooth = "{bt}", especificacion.sistema_operativo = "{sist_op}", especificacion.procesador = "{procesador}", especificacion.dimensiones = "{dimensiones}", especificacion.color = "{color}", especificacion.bateria = "{bateria}", especificacion.peso = "{peso}" WHERE stock.id = {id}')
             cursor.execute('ALTER TABLE stock ADD CONSTRAINT `fstock` FOREIGN KEY (codigo_modelo) REFERENCES especificacion(codigo_modelo)')
 
         elif imagen and ('.' in nombre_img):
@@ -217,9 +217,14 @@ def editar():
                 img_anterior = cursor.fetchone()[0]
                 nombre_img = secure_filename(f"{codigo_modelo}.webp")
                 cursor.execute('ALTER TABLE stock DROP FOREIGN KEY fstock')
-                cursor.execute(f'UPDATE stock JOIN especificacion ON stock.codigo_modelo = especificacion.codigo_modelo SET stock.imagen_modelo = "{nombre_img}", stock.nombre_modelo = "{nombre_modelo}", stock.tipo_celular = "{tipo_celular}", stock.codigo_modelo = "{codigo_modelo}", especificacion.codigo_modelo = "{codigo_modelo}", stock.marca = "{marca}", stock.valor_unitario = "{valor_unitario}", stock.cantidad = {cantidad}, especificacion.camara_principal = "{camara_principal}", especificacion.camara_frontal = "{camara_frontal}", especificacion.flash = "{flash_celular}", especificacion.memoria_interna_rom = "{memoria_rom}", especificacion.memoria_ram = "{memoria_ram}", especificacion.tamaño_pantalla = "{tamaño_pantalla}", especificacion.pantalla_tipo = "{pantalla_tipo}", especificacion.pantalla_resolucion =  "{pantalla_resolucion}", especificacion.tipo_de_red = "{tipo_de_red}", especificacion.wi_fi = "{wifi}", especificacion.puerto_micro_usb = "{usb}", especificacion.gps = "{gps}", especificacion.nfc = "{nfc}", especificacion.bluetooth = "{bt}", especificacion.sistema_operativo = "{sist_op}", especificacion.procesador = "{procesador}", especificacion.dimensiones = "{dimensiones}", especificacion.color = "{color}", especificacion.bateria = "{bateria}", especificacion.peso = "{peso}" WHERE stock.id = {id}')
+                cursor.execute(f'UPDATE stock JOIN especificacion ON stock.codigo_modelo = especificacion.codigo_modelo SET stock.imagen_modelo = "{nombre_img}", stock.nombre_modelo = "{nombre_modelo}", stock.tipo_celular = "{tipo_celular}", stock.codigo_modelo = "{codigo_modelo}", especificacion.codigo_modelo = "{codigo_modelo}", stock.marca = "{marca}", stock.valor_unitario = "{valor_unitario}", stock.cantidad = {cantidad}, especificacion.camara_principal = "{camara_principal}", especificacion.camara_frontal = "{camara_frontal}", especificacion.flash = "{flash_celular}", especificacion.memoria_interna_rom = "{memoria_rom}", especificacion.memoria_ram = "{memoria_ram}", especificacion.tamanio_pantalla = "{tamanio_pantalla}", especificacion.pantalla_tipo = "{pantalla_tipo}", especificacion.pantalla_resolucion =  "{pantalla_resolucion}", especificacion.tipo_de_red = "{tipo_de_red}", especificacion.wi_fi = "{wifi}", especificacion.puerto_micro_usb = "{usb}", especificacion.gps = "{gps}", especificacion.nfc = "{nfc}", especificacion.bluetooth = "{bt}", especificacion.sistema_operativo = "{sist_op}", especificacion.procesador = "{procesador}", especificacion.dimensiones = "{dimensiones}", especificacion.color = "{color}", especificacion.bateria = "{bateria}", especificacion.peso = "{peso}" WHERE stock.id = {id}')
                 cursor.execute('ALTER TABLE stock ADD CONSTRAINT `fstock` FOREIGN KEY (codigo_modelo) REFERENCES especificacion(codigo_modelo)')
+
                 try:
+                    try:
+                        os.remove(f"{carpeta}/{img_anterior}")
+                    except:
+                        pass
                     imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], nombre_img))
                     error = modificar(nombre_img)
                     if error:
@@ -248,13 +253,7 @@ def editar():
         cnx.close()   
         return redirect(url_for('admin'))
 
-    try:
-        os.remove(f"{carpeta}/{img_anterior}")
-    except:
-        flash('Ocurrio un error al guardar los datos', 'error')
-        cursor.close()
-        cnx.close()   
-        return redirect(url_for('admin'))
+
     cnx.commit()
     cursor.close()
     cnx.close() 
