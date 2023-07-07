@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/styles.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+    <title>Catálogo</title>
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="nav container">
+            <picture class="logo">
+                <img src="{{url_for('static', filename='img/logo.png')}}" alt="VW Phone">
+            </picture>
+            <div class="menu">
+                <ul class="menu__links">
+                    <li><a href="{{url_for('index')}}">Inicio</a></li>
+                    <li><a href="{{url_for('catalogo')}}">Catálogo</a></li>
+                    <li><a href="{{url_for('admin')}}" id="activo">Administración</a></li>
+                </ul>
+
+            </div>
+            <div class="menu">
+                <ul class="menu__links iconos">
+                    <li><a href=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a></li>
+                    <li><a href="{{url_for('carrito')}}"><img src="{{url_for('static', filename='img/carrito.svg')}}"
+                                alt=""></a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+
+    <main class="container" id="app" v-cloak>
+        {% with messages = get_flashed_messages(with_categories = True) %}
+        {% if messages %}
+        <div class="{{messages[0][0]}}" v-if="hide" ref="errorFlash">
+            {{ messages[0][1] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <div :class="{error: data.error, exito: !(data.error)}"
+            v-if="!(Object.getOwnPropertyNames(data).length === 0) && mostrar" ref="mensaje">
+            [[data.mensaje]]
+        </div>
+
+        <div class="tabla" ref="tabla">
+            <table v-if="!error">
+                <thead>
+                    <tr>
+                        <th colspan="7">
+                            <div class="titulo_tabla">
+                                <button class="agregar" @click.prevent="abrirForm()"> + Agregar un nuevo
+                                    celular</button>
+                                <p>Stock</p>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Imagen</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="producto in productos">
+                        <td>[[producto.id]]</td>
+
+                        <td>[[producto.codigo_modelo]]</td>
+                        <td>[[producto.marca === "Apple"
+                            ? producto.nombre_modelo
+                            : producto.marca + " " + producto.nombre_modelo]]</td>
+                        <td>[[producto.cantidad]]</td>
+                        <td>[[producto.valor_unitario]]</td>
+                        <td><img :src="{{url_for('static', filename='')}} + 'img/' + producto.imagen_modelo"
+                                alt="Imagen 2" class="img_prod"></td>
+                        <td>
+                            <button class="edit" @click="abrirForm(producto.id)"><img src="../static/img/editar.svg"
+                                    alt=""></button>
+                            <button class="delete"
+                                @click="abrirAdv(producto.codigo_modelo, producto.imagen_modelo)"><img
+                                    src="../static/img/borrar.svg" alt=""></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+
+        <div class="estilo_form" v-if="formAdmin" ref="formAd">
+
+            <button class="cerrar_form" @click.prevent="cerrarForm()">X</button>
+            <h2 class="titulo">[[add
+                ? "Ingresa un nuevo celular"
+                : "Editar características"]]</h2>
+            <h5 v-if="!add">Si no se selecciona imagen, la misma no se modifica
+            </h5>
+            <div class="error error_form" v-if="errorForm" ref="error">
+                [[mensajeForm]]
+            </div>
+            <form :action="add ? '{{url_for('agregar')}}' : '{{url_for('editar')}}'" method="POST"
+                enctype="multipart/form-data">
+                <input type="text" name="id" id="id_producto" hidden readonly :value="celularSeleccionado.id">
+                <div>
+                    <label for="imagen_modelo">Imagen del Modelo:</label>
+                    <input type="file" id="imagen_modelo" name="imagen_modelo" accept="image/*" :required="add"
+                        ref="imagen">
+                </div>
+
+                <div>
+                    <label for="nombre_modelo">Nombre del Modelo:</label>
+                    <input type="text" id="nombre_modelo" name="nombre_modelo" required placeholder=" Ej:S21 FE"
+                        v-model="celularSeleccionado.nombre_modelo">
+                </div>
+
+                <div>
+                    <label for="tipo_celular">Tipo de Celular:</label>
+                    <input type="text" id="tipo_celular" name="tipo_celular" required placeholder="Ej: Smartphone"
+                        v-model="celularSeleccionado.tipo_celular">
+                </div>
+                <div>
+                    <label for="codigo_modelo">Código del Modelo: (*)</label>
+                    <input type="text" id="codigo_modelo" name="codigo_modelo" required placeholder="S21-FE"
+                        v-model="celularSeleccionado.codigo_modelo">
+                </div>
+                <div>
+                    <label for="marca">Marca:</label>
+                    <input type="text" id="marca" name="marca" required placeholder="Ej: Samsung"
+                        v-model="celularSeleccionado.marca">
+                </div>
+                <div>
+                    <label for="valor_unitario">Valor Unitario:</label>
+                    <input type="text" id="valor_unitario" name="valor_unitario" required
+                        v-model="celularSeleccionado.valor_unitario" @keyup="formato()">
+                </div>
+                <div>
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="text" id="cantidad" name="cantidad" required v-model="celularSeleccionado.cantidad">
+                </div>
+
+                <div>
+                    <label for="camara_principal">Cámara Principal:</label>
+                    <input type="text" id="camara_principal" name="camara_principal" required
+                        placeholder="Ej: 100 megapixeles" v-model="celularSeleccionado.camara_principal">
+                </div>
+                <div>
+                    <label for="camara_frontal">Cámara Frontal:</label>
+                    <input type="text" id="camara_frontal" name="camara_frontal" required
+                        placeholder="Ej: 5 megapixeles" v-model="celularSeleccionado.camara_frontal">
+                </div>
+
+
+                <div class="radio-option">
+                    <label for="flash">Flash: </label>
+                    <label class="radio"><span>Si <input type="radio" name="flash" value="Si"
+                                :checked="celularSeleccionado.flash === 'Si'"
+                                v-model="celularSeleccionado.flash"></span></label>
+                    <label class="radio"><span>No<input type="radio" name="flash" value="No"
+                                :checked="celularSeleccionado.flash === 'No'"
+                                v-model="celularSeleccionado.flash"></span></label>
+                </div>
+
+                <div>
+                    <label for="memoria_interna_rom">Memoria Interna (ROM):</label>
+                    <input type="text" id="memoria_interna_rom" name="memoria_interna_rom" required
+                        placeholder="Ej: 128 gb" v-model="celularSeleccionado.memoria_interna_rom">
+                </div>
+                <div>
+                    <label for="memoria_ram">Memoria RAM:</label>
+                    <input type="text" id="memoria_ram" name="memoria_ram" required placeholder="Ej: 6 gb"
+                        v-model="celularSeleccionado.memoria_ram">
+                </div>
+                <div>
+                    <label for="tamanio_pantalla">Tamaño de Pantalla:</label>
+                    <input type="text" id="tamanio_pantalla" name="tamanio_pantalla" required
+                        placeholder="Ej: 6.43 pulgadas" v-model="celularSeleccionado.tamanio_pantalla">
+                </div>
+                <div>
+                    <label for="pantalla_tipo">Tipo de Pantalla:</label>
+                    <input type="text" id="pantalla_tipo" name="pantalla_tipo" required placeholder="Ej: Amoled"
+                        v-model="celularSeleccionado.pantalla_tipo">
+                </div>
+                <div>
+                    <label for="pantalla_resolucion">Resolución de Pantalla:</label>
+                    <input type="text" id="pantalla_resolucion" name="pantalla_resolucion" required
+                        placeholder="Ej: 1080 x 2040 px" v-model="celularSeleccionado.pantalla_resolucion">
+                </div>
+                <div>
+                    <label for="tipo_de_red">Tipo de Red:</label>
+                    <input type="text" id="tipo_de_red" name="tipo_de_red" required placeholder="Ej: 5G"
+                        v-model="celularSeleccionado.tipo_de_red">
+                </div>
+
+                <div class="radio-option">
+                    <label for="wifi">WIFI: </label>
+                    <label><span>Si <input type="radio" name="wifi" value="Si"
+                                :checked="celularSeleccionado.wi_fi === 'Si'"
+                                v-model="celularSeleccionado.wi_fi"></span></label>
+
+                    <label><span>No<input type="radio" name="wifi" value="No"
+                                :checked="celularSeleccionado.wi_fi === 'No'"
+                                v-model="celularSeleccionado.wi_fi"></span></label>
+
+                </div>
+
+
+                <div>
+                    <label for="puerto_micro_usb">Puerto Micro USB:</label>
+                    <input type="text" id="puerto_micro_usb" name="puerto_micro_usb" required
+                        placeholder="Ej: Micro usb tipo C" v-model="celularSeleccionado.puerto_micro_usb">
+                </div>
+                <div class="radio-option">
+                    <label for="gps">GPS: </label>
+                    <label><span>Si <input type="radio" name="gps" value="Si"
+                                :checked="celularSeleccionado.gps === 'Si'"
+                                v-model="celularSeleccionado.gps"></span></label>
+
+                    <label><span>No<input type="radio" name="gps" value="No" :checked="celularSeleccionado.gps === 'No'"
+                                v-model="celularSeleccionado.gps"></span></label>
+
+                </div>
+                <div class="radio-option">
+                    <label for="nfc">NFC (Near Field Communications): </label>
+                    <label><span>Si <input type="radio" name="nfc" value="Si"
+                                :checked="celularSeleccionado.nfc === 'Si'"
+                                v-model="celularSeleccionado.nfc"></span></label>
+
+                    <label><span>No<input type="radio" name="nfc" value="No" :checked="celularSeleccionado.nfc === 'No'"
+                                v-model="celularSeleccionado.nfc"></span></label>
+
+                </div>
+
+                <div class="radio-option">
+                    <label for="bt">Bluetooth: </label>
+                    <label><span>Si <input type="radio" name="bt" value="Si"
+                                :checked="celularSeleccionado.bluetooth === 'Si'"
+                                v-model="celularSeleccionado.bluetooth"></span></label>
+
+                    <label><span>No<input type="radio" name="bt" value="No"
+                                :checked="celularSeleccionado.bluetooth === 'No'"
+                                v-model="celularSeleccionado.bluetooth"></span></label>
+
+                </div>
+                <div>
+                    <label for="sistema_operativo">Sistema Operativo:</label>
+                    <input type="text" id="sistema_operativo" name="sistema_operativo" required
+                        placeholder="Ej: Android" v-model="celularSeleccionado.sistema_operativo">
+                </div>
+                <div>
+                    <label for="procesador">Procesador:</label>
+                    <input type="text" id="procesador" name="procesador" required placeholder="Ej: Snapdragon™ 680"
+                        v-model="celularSeleccionado.procesador">
+                </div>
+                <div>
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" name="color" required v-model="celularSeleccionado.color">
+                </div>
+                <div>
+                    <label for="bateria">Batería:</label>
+                    <input type="text" id="bateria" name="bateria" required placeholder="Ej: 4500 mAh"
+                        v-model="celularSeleccionado.bateria">
+                </div>
+                <div>
+                    <label for="dimensiones">Dimensiones:</label>
+                    <input type="text" id="dimensiones" name="dimensiones" required
+                        placeholder="Ej: 159.87x73.87x8.09 mm" v-model="celularSeleccionado.dimensiones">
+                </div>
+                <div>
+                    <label for="peso">Peso:</label>
+                    <input type="text" id="peso" name="peso" required placeholder="Ej: 190 gr."
+                        v-model="celularSeleccionado.peso">
+                </div>
+                <div class="enviar">
+                    <button type="submit" @click="enviarForm($event)">Guardar datos</button>
+                </div>
+            </form>
+
+
+        </div>
+        <div class="adv" ref="adv" v-if="advertencia">
+            <p>[[mensajeAdv]]</p>
+
+            <button @click.prevent="borrar()">Si</button>
+            <button @click.prevent="cerrarAdv()">No</button>
+
+        </div>
+    </main>
+    <footer>
+        <div class="footer__redes">
+           <p>Puedes encontrarnos en:</p>
+
+            <ul class="redes">
+                <li><a href=""><img src="../static/img/facebook.svg" alt="facebook" class="facebook"></a></li>
+                <li><a href=""><img src="../static/img/instagram.svg" alt="instagram" class="instagram"></a></li>
+                <li><a href=""><img src="../static/img/twitter.svg" alt="twitter" class="twitter"></a></li>
+                <li><a href=""><img src="../static/img/whatsapp.svg" alt="whatsapp" class="whatsapp"></a></li>
+               </ul>
+       
+        </div>
+        <div class="footer__copy">
+            <picture class="footer__copy__item">
+                <img src="../static/img/logo.png" alt="VWPhone" class="logo">
+            </picture>
+            <div class="footer__copy__item" id="copyright">
+                Copyright 2023 &copy;. Todos los derechos reservados
+            </div>
+
+    </footer>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="../static/js/app.js"></script>
+
+</body>
+
+</html>

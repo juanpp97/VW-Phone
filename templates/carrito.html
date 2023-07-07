@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/styles.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+    <title>Catálogo</title>
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="nav container">
+            <picture class="logo">
+                <img src="{{url_for('static', filename='img/logo.png')}}" alt="VW Phone">
+            </picture>
+            <div class="menu">
+                <ul class="menu__links">
+                    <li><a href="{{url_for('index')}}">Inicio</a></li>
+                    <li><a href="{{url_for('catalogo')}}">Catálogo</a></li>
+                    <li><a href="{{url_for('admin')}}">Administración</a></li>
+                </ul>
+
+            </div>
+            <div class="menu">
+                <ul class="menu__links iconos">
+                    <li><a href="" class=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a>
+                    </li>
+                    <li><a href="{{url_for('carrito')}}" class=""><img
+                                src="{{url_for('static', filename='img/carrito.svg')}}" alt=""></a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+    <main class="container" id="app" v-cloak>
+
+
+        <div class="carrito">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Producto 1</td>
+                        <td>$10.00</td>
+                        <td>
+                            5
+                        </td>
+                        <td>$20.00</td>
+                        <td>
+                            <button class="btn btn-delete">Eliminar</button>
+                        </td>
+                    </tr>
+                  
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="cart-total">Total:</td>
+                        <td>$95.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="cart-actions">
+            <button class="btn btn-add">Finalizar compra</button>
+        </div>
+
+    </main>
+
+    
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="../static/js/app.js"></script>
+
+</body>
+
+</html>
