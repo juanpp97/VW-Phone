@@ -15,7 +15,7 @@
 <body>
 
     <header>
-        <nav class="container">
+        <nav class="nav container">
             <picture class="logo">
                 <img src="{{url_for('static', filename='img/logo.png')}}" alt="VW Phone">
             </picture>
@@ -23,21 +23,21 @@
                 <ul class="menu__links">
                     <li><a href="{{url_for('index')}}">Inicio</a></li>
                     <li><a href="{{url_for('catalogo')}}">Catálogo</a></li>
-                    <li><a href="{{url_for('admin')}}" id="activo">Administración</a></li>
+                    <li><a href="{{url_for('admin')}}">Administración</a></li>
                 </ul>
 
             </div>
             <div class="menu">
                 <ul class="menu__links iconos">
-                    <li><a href=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a></li>
-                    <li><a href="{{url_for('carrito')}}"><img src="{{url_for('static', filename='img/carrito.svg')}}"
-                                alt=""></a></li>
+                    <li><a href="" class=""><img src="{{url_for('static', filename='img/usuario.svg')}}" alt=""></a>
+                    </li>
+                    <li><a href="{{url_for('carrito')}}" class=""><img
+                                src="{{url_for('static', filename='img/carrito.svg')}}" alt=""></a></li>
                 </ul>
             </div>
 
         </nav>
     </header>
-
     <main class="container" id="app" v-cloak>
 
 
@@ -80,6 +80,7 @@
 
     </main>
 
+    
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="../static/js/app.js"></script>

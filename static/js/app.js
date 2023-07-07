@@ -18,6 +18,7 @@ let app = Vue.createApp({
             mensajeBorrar: "",
             advertencia: false,
             mensajeAdv: "",
+            mostrar: false,
 
         }
     },
@@ -111,6 +112,7 @@ let app = Vue.createApp({
                 setTimeout(() => {
                     this.errorForm = false;
                     this.hide = false;
+                    this.mostrar = false;
                 }, 750)
             }, 3000)
 
@@ -209,6 +211,7 @@ let app = Vue.createApp({
 
             this.data = await response.json();
             this.advertencia = false;
+            this.mostrar = true;
             this.$refs.tabla.style.pointerEvents = "auto";
             this.fade();
             this.obtenerProductos();

@@ -23,7 +23,13 @@ def ordenar_id(db):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    cnx = conectar()
+    cursor = cnx.cursor()
+    cursor.execute("SELECT nombre_modelo, marca, imagen_modelo FROM stock ORDER BY rand() LIMIT 6")
+    datos = cursor.fetchall();
+    cursor.close()
+    cnx.close()
+    return render_template("index.html", datos = datos)
 
 @app.route("/catalogo")
 def catalogo():
@@ -37,7 +43,7 @@ def carrito():
     return render_template("carrito.html")
 
 
-@app.route("/stock", methods=["GET", "POST"])
+@app.route("/stock", methods=["GET"])
 def obtener_datos():
     if request.method == "GET":
         cnx = conectar()

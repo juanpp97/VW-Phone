@@ -1,8 +1,4 @@
 USE tienda;
-/*Para borrar las tablas, por la clave foranea primero se borra stock (para no dejar claves foraneas sin referencia)*/
-DROP TABLE stock;
-DROP TABLE especificacion;
-USE tienda;
 CREATE TABLE especificacion (
     codigo_modelo VARCHAR(20) PRIMARY KEY UNIQUE NOT NULL,
     camara_principal VARCHAR(20) NOT NULL DEFAULT "",
@@ -31,9 +27,9 @@ CREATE TABLE stock (
     imagen_modelo VARCHAR(20) NOT NULL UNIQUE,
     nombre_modelo VARCHAR(30) NOT NULL UNIQUE,
     tipo_celular VARCHAR (20) NOT NULL,
-    codigo_modelo VARCHAR (20) NOT NULL,
+    codigo_modelo VARCHAR (20) NOT NULL UNIQUE,
     marca VARCHAR (30) NOT NULL, 
-    valor_unitario DECIMAL(10,2) NOT NULL,
+    valor_unitario DECIMAL(10,2) NOT NULL,  
     cantidad INT NOT NULL,
     CONSTRAINT fstock FOREIGN KEY(codigo_modelo) REFERENCES especificacion(codigo_modelo)
 );
@@ -177,3 +173,6 @@ SET stock.nombre_modelo = "S23",
     especificacion.bateria = "3900 mAh",
     especificacion.peso = "168 g"
 WHERE stock.id = "1";
+
+USE tienda;
+SELECT nombre_modelo, marca FROM stock ORDER BY rand() LIMIT 6;

@@ -15,7 +15,7 @@
 <body>
 
     <header>
-        <nav class="container">
+        <nav class="nav container">
             <picture class="logo">
                 <img src="{{url_for('static', filename='img/logo.png')}}" alt="VW Phone">
             </picture>
@@ -47,7 +47,7 @@
         {% endif %}
         {% endwith %}
         <div :class="{error: data.error, exito: !(data.error)}"
-            v-if="!(Object.getOwnPropertyNames(data).length === 0) && hide" ref="mensaje">
+            v-if="!(Object.getOwnPropertyNames(data).length === 0) && mostrar" ref="mensaje">
             [[data.mensaje]]
         </div>
 
@@ -298,6 +298,27 @@
 
         </div>
     </main>
+    <footer>
+        <div class="footer__redes">
+           <p>Puedes encontrarnos en:</p>
+
+            <ul class="redes">
+                <li><a href=""><img src="../static/img/facebook.svg" alt="facebook" class="facebook"></a></li>
+                <li><a href=""><img src="../static/img/instagram.svg" alt="instagram" class="instagram"></a></li>
+                <li><a href=""><img src="../static/img/twitter.svg" alt="twitter" class="twitter"></a></li>
+                <li><a href=""><img src="../static/img/whatsapp.svg" alt="whatsapp" class="whatsapp"></a></li>
+               </ul>
+       
+        </div>
+        <div class="footer__copy">
+            <picture class="footer__copy__item">
+                <img src="../static/img/logo.png" alt="VWPhone" class="logo">
+            </picture>
+            <div class="footer__copy__item" id="copyright">
+                Copyright 2023 &copy;. Todos los derechos reservados
+            </div>
+
+    </footer>
 
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
