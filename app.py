@@ -26,7 +26,7 @@ def index():
     cnx = conectar()
     cursor = cnx.cursor()
     cursor.execute("SELECT nombre_modelo, marca, imagen_modelo FROM stock ORDER BY rand() LIMIT 6")
-    datos = cursor.fetchall();
+    datos = cursor.fetchall()
     cursor.close()
     cnx.close()
     return render_template("index.html", datos = datos)
