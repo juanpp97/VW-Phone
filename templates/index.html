@@ -105,7 +105,7 @@
                     {% for celular in datos %}
                     <div class="card">
                         <div class="icon">
-                            <a href="{{url_for('catalogo')}}"><img src="../static/img/{{celular[2]}}" alt=""></a>
+                            <a href="{{url_for('catalogo')}}"><img src="../static/img/{{celular[2]}}" alt="" loading="lazy"></a>
                         </div>
                         {% if celular[1] == "Apple" %}
                         <h3> {{celular[0]}} </h3>
