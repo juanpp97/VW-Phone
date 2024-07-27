@@ -1,0 +1,2 @@
+class ModelException(BaseException):
+    pass

@@ -4,20 +4,15 @@ from cambiar import modificar
 from werkzeug.utils import secure_filename
 from celular import Celular
 import os
-
+from decouple import config
 app = Flask(__name__)
 
 carpeta = 'static/img/'
 ext_permitidas = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'avif']
-app.secret_key = b'_sdsa4582L"F4Q8z]/'
+app.secret_key = config('SECRET_KEY')
 app.config['UPLOAD_FOLDER'] = carpeta
 
-def ordenar_id(db):
-    cursor = db.cursor()
-    cursor.execute(f"SET @count = 0")
-    cursor.execute(f"UPDATE stock SET id = @count:=@count+1")
-    db.commit()
-    cursor.close()
+
 
 
 
